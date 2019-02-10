@@ -84,9 +84,9 @@ class App extends Component {
                             <Carousel className="scores" autoPlay={true} showThumbs={false} interval={3000} infiniteLoop={true}
                                       transitionTime={500} showIndicators={false} showStatus={false} showArrows={false} >
                                 {
-                                    this.state && this.state.matches.length > 0 && this.state.matches.map((item,i) =>
+                                    this.state && this.state.matches.length > 0 && this.state.matches.map((match,i) =>
                                         <Fragment key={i}>
-                                            <ScoreBet score={item} clickToBet={() => this.goToBet(item)} />
+                                            <ScoreBet score={match} clickToBet={() => this.goToBet(match)} />
                                         </Fragment>
                                     )
                                 }
