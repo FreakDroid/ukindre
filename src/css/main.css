@@ -126,24 +126,17 @@ footer .inner p {
 
 .iconBASKETBALL {
     background: url('../images/icons/basketball.png');
-    height: 16px;
-    width: 16px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 2px;
 }
 
 .iconTENNIS {
     background: url('../images/icons/tennis.png');
-    height: 16px;
-    width: 16px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: px;
 }
 
 .iconFOOTBALL {
     background: url('../images/icons/football.png');
+}
+
+.icon {
     height: 16px;
     width: 16px;
     display: inline-block;

@@ -82,7 +82,7 @@ class App extends Component {
                         <AsideCustom />
                         <div id="live-matches">
                             <Carousel className="scores" autoPlay={true} showThumbs={false} interval={3000} infiniteLoop={true}
-                                      transitionTime={500} showIndicators={false} showStatus={false} showArrows={false}>
+                                      transitionTime={500} showIndicators={false} showStatus={false} showArrows={false} >
                                 {
                                     this.state && this.state.matches.length > 0 && this.state.matches.map((item,i) =>
                                         <Fragment key={i}>

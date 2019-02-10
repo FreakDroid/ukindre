@@ -1,30 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import basketball from '../images/icons/basketball.png';
+import moment from 'moment';
 
-const ScoreBet = ({score, clickToBet}) => {
+const  ScoreBet = ({score: match, clickToBet}) => {
 
     return (
         <div className="scores">
             <span className="scoreSpan">
-                {score.liveData.score && score.liveData.score.home} - {score.liveData.score && score.liveData.score.away}
+                {match.liveData.score && match.liveData.score.home} - {match.liveData.score && match.liveData.score.away}
                 </span>
             <br/>
             {
-                score.event.sport.toUpperCase() === "FOOTBALL" ||
-                score.event.sport.toUpperCase() === "TENNIS" ||
-                score.event.sport.toUpperCase() === "BASKETBALL"
-                ? <i className={"icon"+ score.event.sport.toUpperCase() } /> : <i className="" />
+                match.event.sport.toUpperCase() === "FOOTBALL" ||
+                match.event.sport.toUpperCase() === "TENNIS" ||
+                match.event.sport.toUpperCase() === "BASKETBALL"
+                ? <i className={"icon icon"+ match.event.sport.toUpperCase() } /> : <i className="" />
             }
 
             <span className="awayHomeSpan">
-
-                {score.event.name}
-
+                {match.event.name}
                 </span>
             <br/>
             <span className="whenMatch">
-                TESTETE -TESTSTEST
+                { moment(match.event.start).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD') ?
+                    'Today, ' + moment(match.event.start).format("HH:mm")  : moment(match.event.start).format('YYYY-MM-DD') +' '+ moment(match.event.start).format("HH:mm")
+                }
             </span>
             <br/>
             <button className="betButton" onClick={clickToBet}>
