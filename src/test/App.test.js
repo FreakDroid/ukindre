@@ -2,13 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../App';
 import { shallow, mount } from 'enzyme';
-import Header from '../components/Header';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import AsideCustom from '../components/AsideCustom';
+
 
 describe('Testing Main Component', () => {
-
     let mockData = [];
 
     beforeEach(() => {
@@ -253,47 +249,48 @@ describe('Testing Main Component', () => {
         ReactDOM.unmountComponentAtNode(div);
     });
 
-    it('should render header in the main component', ()=>{
-       let mountHeader = shallow(<Header />);
-
-        //Mounted the componenet
-        expect(mountHeader.find('header')).toBeDefined();
-
-        expect(mountHeader.find('div')).toBeDefined();
-    });
-
-    it ('should render Footer in the main component ', () =>{
-        let mountFooter = shallow(<Footer/>);
-
-        expect(mountFooter.find('footer')).toBeDefined();
-    });
-
-    it ('should render Navbar in the main component ', () =>{
-        let mountFooter = shallow(<Navbar/>);
-
-        expect(mountFooter.find('navbar')).toBeDefined();
-    });
-
-    it('should render AsideCustom in the main component', () =>{
-        let mountFooter = shallow(<AsideCustom/>);
-        expect(mountFooter.find('aside')).toBeDefined();
-    });
-
-    it('Checking the componentDidMount method', async () => {
+    it('Checking the componentDidMount method and the state is good loaded', async () => {
+        //Create the mocks
         const componentDidMount = jest.spyOn(App.prototype, 'componentDidMount');
         const requestMatches = jest.spyOn(App.prototype, 'requestMatches');
         const renewMatches = jest.spyOn(App.prototype, 'renewMatches');
 
         const app = mount(<App/>);
+
+        //Mocking the state
         app.setState({
             matches: mockData
         });
+
+        //check the execution
         expect(componentDidMount).toHaveBeenCalledTimes(1);
         expect(requestMatches).toHaveBeenCalledTimes(1);
         expect(renewMatches).toHaveBeenCalledTimes(1);
 
         expect(app.state().matches.length).toBe(2);
 
+        //Restoring the functions
+        componentDidMount.mockRestore();
+        requestMatches.mockRestore();
+        renewMatches.mockRestore();
     });
+
+    it('Checking the componentDidMount method and the state has error loaded', async () => {
+        const componentDidMount = jest.spyOn(App.prototype, 'componentDidMount');
+
+        const app = mount(<App/>);
+        app.setState({
+            error: 'Error with the API'
+        });
+        expect(componentDidMount).toHaveBeenCalledTimes(1);
+
+        expect(app.state().error).toBe('Error with the API');
+        expect(app.find('div.error')).toBeDefined();
+
+        expect(app.find('div.error')).to.have.lengthOf(3);
+
+        //Restoring the functions
+        componentDidMount.mockRestore();
+    })
 
 });

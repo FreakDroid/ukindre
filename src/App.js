@@ -32,12 +32,13 @@ class App extends Component {
     }
 
 
+    //React Lifecicle :P
     componentDidMount(){
         this.requestMatches();
         this.renewMatches();
     }
 
-    //Clear the setInterval
+    //Clear the setInterval when the component will be unmounted
     componentWillUnmount() {
         clearInterval(this.renewMatches);
     }
@@ -46,16 +47,21 @@ class App extends Component {
     //Method to request Matches
     async requestMatches(){
         try {
+            //Get the matches from the server
             const apiResponse = await axios('http://api.unicdn.net/v1/feeds/sportsbook/event/live.jsonp?app_id=ca7871d7&app_key=5371c125b8d99c8f6b5ff9a12de8b85a');
             console.log(apiResponse.data.liveEvents);
+
+            //Save it on the state
             this.setState({
                 matches: apiResponse.data.liveEvents,
                 isLoaded: true,
             });
             console.log(this.state.matches[0].event.name);
         } catch (e) {
+            console.log(e.message);
+            //If something went wrong I got the error to show it.
             this.setState({
-                error: e
+                error: e.message
             });
         }
     }
@@ -81,16 +87,25 @@ class App extends Component {
                         </p>
                         <AsideCustom />
                         <div id="live-matches">
-                            <Carousel className="scores" autoPlay={true} showThumbs={false} interval={3000} infiniteLoop={true}
-                                      transitionTime={500} showIndicators={false} showStatus={false} showArrows={false} >
-                                {
-                                    this.state && this.state.matches.length > 0 && this.state.matches.map((match,i) =>
-                                        <Fragment key={i}>
-                                            <ScoreBet score={match} clickToBet={() => this.goToBet(match)} />
-                                        </Fragment>
-                                    )
-                                }
-                            </Carousel>
+                            {
+                                /// If the state has an error show div with error
+                                (this.state && this.state.error) ? <div className="error"> {this.state.error} </div> :
+
+                                    //Otherwise show the carousel
+                                    <Carousel className="scores"
+                                              autoPlay={true} showThumbs={false} interval={3000} infiniteLoop={true}
+                                              transitionTime={500} showIndicators={false} showStatus={false} stopOnHover={false}
+                                              showArrows={false}>
+                                        {
+                                            //When the state has loaded the matches, show it
+                                            this.state && this.state.matches.length > 0 && this.state.matches.map((match, i) =>
+                                                <Fragment key={i}>
+                                                    <ScoreBet score={match} clickToBet={() => this.goToBet(match)}/>
+                                                </Fragment>
+                                            )
+                                        }
+                                    </Carousel>
+                            }
                         </div>
                     </article>
                 </div>
