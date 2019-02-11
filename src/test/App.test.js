@@ -273,6 +273,7 @@ describe('Testing Main Component', () => {
         componentDidMount.mockRestore();
         requestMatches.mockRestore();
         renewMatches.mockRestore();
+
     });
 
     it('Checking the componentDidMount method and the state has error loaded', async () => {
@@ -287,10 +288,58 @@ describe('Testing Main Component', () => {
         expect(app.state().error).toBe('Error with the API');
         expect(app.find('div.error')).toBeDefined();
 
-        expect(app.find('div.error')).to.have.lengthOf(3);
+        //Restoring the functions
+        componentDidMount.mockRestore();
+    });
+
+    it('Checking the componentDidMount method and the state has is loading', async () => {
+        const componentDidMount = jest.spyOn(App.prototype, 'componentDidMount');
+
+        const app = mount(<App/>);
+        app.setState({
+            isLoaded: false
+        });
+        expect(app.find('div.loading')).toBeDefined();
+
+        expect(componentDidMount).toHaveBeenCalledTimes(1);
+
+        app.setState({
+            isLoaded: true
+        });
+        expect(app.state().isLoaded).toBe(true);
+        expect(app.find('div.loading').length).toBe(0);
 
         //Restoring the functions
         componentDidMount.mockRestore();
     })
 
+
+    it('Checking the carousel and it should have 2 elements', async () => {
+        const componentDidMount = jest.spyOn(App.prototype, 'componentDidMount');
+
+        const app = mount(<App/>);
+        app.setState({
+            matches: [],
+            isLoaded: false
+        });
+        expect(app.find('div.loading')).toBeDefined();
+        expect(app.find('CarouselScores').length).toBe(0);
+
+        expect(componentDidMount).toHaveBeenCalledTimes(1);
+
+        app.setState({
+            isLoaded: true,
+            matches: mockData
+        });
+        expect(app.state().isLoaded).toBe(true);
+        expect(app.state().matches.length).toBe(2);
+        expect(app.find('div.loading').length).toBe(0);
+
+
+        //those are four because the previous call above
+        expect(app.find('li.slide').length).toBe(4);
+
+        //Restoring the functions
+        componentDidMount.mockRestore();
+    })
 });

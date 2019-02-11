@@ -1,15 +1,14 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
 import './css/main.css';
 import Header from './components/Header';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AsideCustom from './components/AsideCustom';
-import ScoreBet from './components/ScoreBet';
 import axios from 'axios';
 
-import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import CarouselScores from './components/CarouselScores';
 
 
 class App extends Component {
@@ -88,23 +87,20 @@ class App extends Component {
                         <AsideCustom />
                         <div id="live-matches">
                             {
-                                /// If the state has an error show div with error
-                                (this.state && this.state.error) ? <div className="error"> {this.state.error} </div> :
 
-                                    //Otherwise show the carousel
-                                    <Carousel className="scores"
-                                              autoPlay={true} showThumbs={false} interval={3000} infiniteLoop={true}
-                                              transitionTime={500} showIndicators={false} showStatus={false} stopOnHover={false}
-                                              showArrows={false}>
-                                        {
-                                            //When the state has loaded the matches, show it
-                                            this.state && this.state.matches.length > 0 && this.state.matches.map((match, i) =>
-                                                <Fragment key={i}>
-                                                    <ScoreBet score={match} clickToBet={() => this.goToBet(match)}/>
-                                                </Fragment>
-                                            )
-                                        }
-                                    </Carousel>
+                                /// If the state has an error show div with error
+                                (this.state && this.state.error)
+                                    ? <div className="scores error"> <p className="padding-top">{this.state.error}</p></div>
+                                    :
+                                    //if the matches are not loaded yet show the loading
+                                    (!this.state.isLoaded)
+                                        ?
+                                        <div className="scores loading">
+                                          <p className="padding-top"> LOADING MATCHES </p>
+                                        </div>
+                                        :
+                                        //otherwise show the carousel :D
+                                        <CarouselScores event={this.goToBet} matches={this.state.matches}/>
                             }
                         </div>
                     </article>
