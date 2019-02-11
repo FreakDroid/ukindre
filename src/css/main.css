@@ -93,7 +93,7 @@ footer .inner p {
 }
 
 .scoreSpan{
-    color: gold;
+    color: 	#e4ae0d;
     font-size: 2em;
     display: inline-block;
     margin-top: 16px;
@@ -107,7 +107,7 @@ footer .inner p {
 }
 
 .whenMatch{
-    color: #333333;
+    color: #585858;
     font-size: 1em;
     display: inline-block;
     margin-top: 5px;
@@ -118,8 +118,8 @@ footer .inner p {
     height: 34px;
     border-radius: 4px;
     color: white;
-    background-color: limegreen;
-    border: 1px solid limegreen;
+    background-color: #38A632;
+    border: 1px solid #38A632;
     margin-top: 16px;
 
 }
