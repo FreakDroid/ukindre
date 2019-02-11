@@ -14,7 +14,8 @@ const  ScoreBet = ({score: match, clickToBet}) => {
                 match.event.sport.toUpperCase() === "FOOTBALL" ||
                 match.event.sport.toUpperCase() === "TENNIS" ||
                 match.event.sport.toUpperCase() === "BASKETBALL"
-                ? <i className={"icon icon"+ match.event.sport.toUpperCase() } /> : <i className="" />
+                ? <i className={"icon icon"+ match.event.sport.toUpperCase() } /> :
+                    <i className={"icon iconDEFAULT" } />
             }
 
             <span className="awayHomeSpan">
@@ -23,7 +24,8 @@ const  ScoreBet = ({score: match, clickToBet}) => {
             <br/>
             <span className="whenMatch">
                 { moment(match.event.start).format('YYYY-MM-DD') === moment().format('YYYY-MM-DD') ?
-                    'Today, ' + moment(match.event.start).format("HH:mm")  : moment(match.event.start).format('YYYY-MM-DD') +' '+ moment(match.event.start).format("HH:mm")
+                    'Today, ' + moment(match.event.start).format("HH:mm")  : moment(match.event.start).format('YYYY-MM-DD') +' '+
+                    moment(match.event.start).format("HH:mm")
                 }
             </span>
             <br/>

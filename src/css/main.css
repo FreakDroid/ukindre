@@ -152,6 +152,11 @@ footer .inner p {
     background: url('../images/icons/football.png');
 }
 
+.iconDEFAULT {
+    background: url('../images/icons/default.png');
+    margin-right: 1px;
+}
+
 .icon {
     height: 16px;
     width: 16px;
